@@ -975,6 +975,14 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [showTerminal, setShowTerminal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   useEffect(() => {
     setIsLoaded(true);
@@ -1055,6 +1063,39 @@ function App() {
     { value: '3+', label: 'Years Experience', icon: Rocket },
     { value: '100%', label: 'Client Satisfaction', icon: Zap },
   ];
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('http://localhost:3001/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   return (
     <div className="min-h-screen gradient-bg grid-bg relative overflow-x-hidden cursor-none md:cursor-none">
@@ -1322,7 +1363,7 @@ function App() {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Info */}
             <div className="space-y-8">
-              <div className="holo-card rounded-xl p-8 hover:border-cyan-500/50 transition-all duration-300">
+              <div className="holo-card rounded-xl p-8 hover:border-cyan-500/50 transition-all duration-300 transform-gpu">
                 <h3 className="font-cyber text-2xl font-bold text-white mb-6">Contact Information</h3>
                 
                 <div className="space-y-6">
@@ -1339,12 +1380,12 @@ function App() {
                     };
                     return (
                       <div key={i} className="flex items-center gap-4 group cursor-pointer">
-                        <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${colorMap[item.color]} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                        <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${colorMap[item.color]} flex items-center justify-center group-hover:scale-110 transition-transform duration-200 ease-out transform-gpu`}>
                           <Icon className="w-6 h-6 text-white" />
                         </div>
                         <div>
                           <p className="text-gray-400 text-sm">{item.label}</p>
-                          <p className="text-white font-medium group-hover:text-cyan-400 transition-colors">{item.value}</p>
+                          <p className="text-white font-medium group-hover:text-cyan-400 transition-colors duration-200">{item.value}</p>
                         </div>
                       </div>
                     );
@@ -1358,7 +1399,7 @@ function App() {
                       href="https://github.com/usmanhasann" 
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:bg-cyan-500/20 hover:scale-110 transition-all border border-white/10 hover:border-cyan-500/30"
+                      className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:bg-cyan-500/20 hover:scale-110 transition-all duration-200 border border-white/10 hover:border-cyan-500/30 transform-gpu"
                     >
                       <Github className="w-5 h-5" />
                     </a>
@@ -1366,7 +1407,7 @@ function App() {
                       href="https://www.linkedin.com/in/usmanhsn" 
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:bg-cyan-500/20 hover:scale-110 transition-all border border-white/10 hover:border-cyan-500/30"
+                      className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:bg-cyan-500/20 hover:scale-110 transition-all duration-200 border border-white/10 hover:border-cyan-500/30 transform-gpu"
                     >
                       <Linkedin className="w-5 h-5" />
                     </a>
@@ -1374,7 +1415,7 @@ function App() {
                       href="https://x.com/osManShadow3" 
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:bg-cyan-500/20 hover:scale-110 transition-all border border-white/10 hover:border-cyan-500/30"
+                      className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:bg-cyan-500/20 hover:scale-110 transition-all duration-200 border border-white/10 hover:border-cyan-500/30 transform-gpu"
                     >
                       <Twitter className="w-5 h-5" />
                     </a>
@@ -1384,16 +1425,32 @@ function App() {
             </div>
 
             {/* Contact Form */}
-            <div className="holo-card rounded-xl p-8 hover:border-purple-500/50 transition-all duration-300">
+            <div className="holo-card rounded-xl p-8 hover:border-purple-500/50 transition-all duration-300 transform-gpu">
               <h3 className="font-cyber text-2xl font-bold text-white mb-6">Send a Message</h3>
               
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              {submitStatus === 'success' && (
+                <div className="mb-6 p-4 bg-green-500/20 border border-green-500/30 rounded-lg text-green-400">
+                  Message sent successfully! I'll get back to you soon.
+                </div>
+              )}
+              
+              {submitStatus === 'error' && (
+                <div className="mb-6 p-4 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400">
+                  Failed to send message. Please try again or contact me directly.
+                </div>
+              )}
+              
+              <form className="space-y-6" onSubmit={handleContactSubmit}>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="group">
                     <label className="block text-gray-400 text-sm mb-2">Name</label>
                     <input 
                       type="text" 
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
                       placeholder="John Doe"
+                      required
                       className="w-full px-4 py-3 bg-black/50 border border-cyan-500/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_20px_rgba(0,212,255,0.3)] transition-all group-hover:border-cyan-500/50"
                     />
                   </div>
@@ -1401,7 +1458,11 @@ function App() {
                     <label className="block text-gray-400 text-sm mb-2">Email</label>
                     <input 
                       type="email" 
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       placeholder="john@example.com"
+                      required
                       className="w-full px-4 py-3 bg-black/50 border border-cyan-500/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_20px_rgba(0,212,255,0.3)] transition-all group-hover:border-cyan-500/50"
                     />
                   </div>
@@ -1411,7 +1472,11 @@ function App() {
                   <label className="block text-gray-400 text-sm mb-2">Subject</label>
                   <input 
                     type="text" 
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
                     placeholder="Project Inquiry"
+                    required
                     className="w-full px-4 py-3 bg-black/50 border border-cyan-500/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_20px_rgba(0,212,255,0.3)] transition-all group-hover:border-cyan-500/50"
                   />
                 </div>
@@ -1420,18 +1485,32 @@ function App() {
                   <label className="block text-gray-400 text-sm mb-2">Message</label>
                   <textarea 
                     rows={4}
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
                     placeholder="Tell me about your project..."
+                    required
                     className="w-full px-4 py-3 bg-black/50 border border-cyan-500/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:shadow-[0_0_20px_rgba(0,212,255,0.3)] transition-all resize-none group-hover:border-cyan-500/50"
                   />
                 </div>
 
                 <button 
                   type="submit"
-                  className="w-full btn-cyber rounded-lg flex items-center justify-center gap-2 py-4"
+                  disabled={isSubmitting}
+                  className="w-full btn-cyber rounded-lg flex items-center justify-center gap-2 py-4 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Sparkles className="w-5 h-5" />
-                  Send Message
-                  <ChevronRight className="w-5 h-5" />
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="w-5 h-5" />
+                      Send Message
+                      <ChevronRight className="w-5 h-5" />
+                    </>
+                  )}
                 </button>
               </form>
             </div>

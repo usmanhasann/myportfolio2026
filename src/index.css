@@ -203,6 +203,8 @@
   border: 1px solid rgba(0, 212, 255, 0.3);
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+  transform-origin: center;
+  will-change: transform, box-shadow;
 }
 
 .holo-card::before {
@@ -214,6 +216,7 @@
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
   transition: left 0.5s ease;
+  pointer-events: none;
 }
 
 .holo-card:hover::before {
@@ -221,7 +224,7 @@
 }
 
 .holo-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-5px) scale(1.02);
   box-shadow: 
     0 10px 40px rgba(0, 212, 255, 0.3),
     0 0 60px rgba(168, 85, 247, 0.2);
