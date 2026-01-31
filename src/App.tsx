@@ -388,7 +388,7 @@ const SkillConstellation = () => {
   return (
     <div 
       ref={containerRef}
-      className="relative w-full h-[600px] md:h-[700px] overflow-hidden"
+      className="relative w-full h-[700px] md:h-[800px] overflow-hidden"
       onMouseMove={handleMouseMove}
     >
       {/* SVG Connections */}
@@ -454,7 +454,7 @@ const SkillConstellation = () => {
         return (
           <div
             key={node.id}
-            className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
+            className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group mt-12"
             style={{ left: `${node.x}%`, top: `${node.y}%` }}
             onMouseEnter={() => setHoveredNode(node.id)}
             onMouseLeave={() => setHoveredNode(null)}
@@ -539,7 +539,7 @@ const SkillConstellation = () => {
       })}
 
       {/* Info Panel */}
-      <div className="absolute bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-72 p-4 holo-card rounded-xl z-10">
+      <div className="absolute bottom-26 left-46 right-6 md:left-5 md:right-0.5 md:w-80 p-4 holo-card rounded-xl z-10">
         <div className="flex items-center gap-2 mb-2">
           <Sparkles className="w-4 h-4 text-cyan-400" />
           <span className="font-cyber text-xs text-cyan-400 uppercase tracking-wider">Skill Constellation</span>
@@ -1010,7 +1010,7 @@ function App() {
     {
       title: 'PAK IT SYSTEMS',
       description: 'A platform connecting homeowners with skilled contractors offering competitive rates, while providing contractors with valuable leads and clients to grow their business.',
-      tags: ['React', 'Platform', 'Contractors'],
+      tags: ['React', 'Tailwand', 'Shadcn'],
       icon: Globe,
       gradient: ['#00d4ff', '#a855f7'],
       liveLink: 'https://pakitsystems-usman.netlify.app/managedSecurity'
@@ -1018,7 +1018,7 @@ function App() {
     {
       title: 'Nutrition Coach',
       description: 'Developed a React website for Nutrition Coach with a dynamic app screenshot slider and a modern hero section, enhancing user engagement and brand trust.',
-      tags: ['React', 'Website', 'Nutrition'],
+      tags: ['React'],
       icon: Sparkles,
       gradient: ['#00ff88', '#00d4ff'],
       liveLink: 'https://nutritioncoachofficial.com/'
@@ -1034,7 +1034,7 @@ function App() {
     {
       title: 'Dynasty Fabrics',
       description: 'Built a modern e-commerce website for selling clothing, featuring product browsing, detailed listings, cart management, and a smooth checkout experience.',
-      tags: ['Bubble.io', 'E-commerce', 'Clothing', 'No-Code'],
+      tags: ['Bubble.io', 'E-commerce','No-Code'],
       icon: Layout,
       gradient: ['#ec4899', '#f43f5e'],
       liveLink: 'https://dynastyfabrics-16638.bubbleapps.io/version-test'
