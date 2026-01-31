@@ -802,7 +802,7 @@ const InteractiveTerminal = () => {
     about: 'Muhammad Usman - Frontend Developer passionate about creating immersive digital experiences.',
     skills: 'React.js • JavaScript • TypeScript • Tailwind CSS • Git • Bubble.io • Webflow • WordPress',
     projects: 'Check out my featured projects in the Projects section!',
-    contact: 'Email: contact@muhammadusman.dev | Available for freelance work worldwide',
+    contact: 'Email: osmanmuhammadofficial@gmail.com | Available for freelance work worldwide',
     whoami: 'guest@portfolio:~$ You are a visitor exploring my digital universe!',
     date: () => new Date().toLocaleString(),
     matrix: 'Wake up, Neo... 🕶️ The Matrix has you...',
@@ -1327,7 +1327,7 @@ function App() {
                 
                 <div className="space-y-6">
                   {[
-                    { icon: Mail, label: 'Email', value: 'contact@muhammadusman.dev', color: 'cyan' },
+                    { icon: Mail, label: 'Email', value: 'osmanmuhammadofficial@gmail.com', color: 'cyan' },
                     { icon: Globe, label: 'Location', value: 'Available Worldwide', color: 'purple' },
                     { icon: Zap, label: 'Availability', value: 'Open for Freelance', color: 'green' },
                   ].map((item, i) => {
@@ -1354,15 +1354,30 @@ function App() {
                 <div className="mt-8 pt-6 border-t border-white/10">
                   <p className="text-gray-400 text-sm mb-4">Follow me on</p>
                   <div className="flex gap-4">
-                    {[Github, Linkedin, Twitter].map((Icon, i) => (
-                      <a 
-                        key={i}
-                        href="#" 
-                        className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:bg-cyan-500/20 hover:scale-110 transition-all border border-white/10 hover:border-cyan-500/30"
-                      >
-                        <Icon className="w-5 h-5" />
-                      </a>
-                    ))}
+                    <a 
+                      href="https://github.com/usmanhasann" 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:bg-cyan-500/20 hover:scale-110 transition-all border border-white/10 hover:border-cyan-500/30"
+                    >
+                      <Github className="w-5 h-5" />
+                    </a>
+                    <a 
+                      href="https://www.linkedin.com/in/usmanhsn" 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:bg-cyan-500/20 hover:scale-110 transition-all border border-white/10 hover:border-cyan-500/30"
+                    >
+                      <Linkedin className="w-5 h-5" />
+                    </a>
+                    <a 
+                      href="https://x.com/osManShadow3" 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:bg-cyan-500/20 hover:scale-110 transition-all border border-white/10 hover:border-cyan-500/30"
+                    >
+                      <Twitter className="w-5 h-5" />
+                    </a>
                   </div>
                 </div>
               </div>
@@ -1424,32 +1439,7 @@ function App() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 border-t border-cyan-500/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <Hexagon className="w-6 h-6 text-cyan-400" />
-              <span className="font-cyber text-lg font-bold text-white">
-                MU<span className="text-cyan-400">.</span>USMAN
-              </span>
-            </div>
-            
-            <p className="text-gray-400 text-sm">
-              © 2024 Muhammad Usman. All rights reserved.
-            </p>
-
-            <div className="flex items-center gap-2 text-gray-400 text-sm">
-              <span>Built with</span>
-              <Code2 className="w-4 h-4 text-cyan-400" />
-              <span>+</span>
-              <Sparkles className="w-4 h-4 text-purple-400" />
-              <span>+</span>
-              <Zap className="w-4 h-4 text-green-400" />
-            </div>
-          </div>
-        </div>
-      </footer>
+    
     </div>
   );
 }
